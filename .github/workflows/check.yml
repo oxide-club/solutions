@@ -17,6 +17,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Instalar dependências da validação
+        working-directory: solutions
+        run: python3 -m pip install -r requirements-validation.txt
+      - name: Validar catálogos da comunidade
+        working-directory: solutions
+        run: python3 tools/validate_community.py
       - name: Verificar ferramentas de manutenção
         working-directory: solutions
         run: python3 -m unittest discover -s tests -v

@@ -1,33 +1,69 @@
 # Contribuir com soluções
 
-## Compartilhar uma solução
+## Compartilhar uma implementação
 
-Mantenha o código em seu próprio repositório e envie um PR adicionando uma linha
-à seção **Soluções da comunidade** de `<id>/README.md`, como
-[001-wc/README.md](001-wc/README.md). Use o ID oficial do desafio.
+1. Escolha um desafio publicado pelo Oxide Club.
+2. Desenvolva sua implementação, completa ou parcial.
+3. Publique o código em um repositório público próprio, em qualquer serviço.
+4. Faça um fork de `oxide-club/solutions`.
+5. Localize `{challenge_id}/community.yaml`, usando o ID canônico, como `001-wc`.
+6. Adicione uma entrada com seus dados à lista `implementations`.
+7. Abra um pull request com a alteração.
+8. Aguarde a revisão dos mantenedores.
 
-Copie o modelo abaixo e substitua os dados de exemplo:
+Não é necessário reproduzir a estrutura de diretórios do clube em seu repositório.
+O código permanece hospedado por você; o catálogo armazena apenas referências.
 
-```md
-| Autor | Linguagem | Solução | Estado | Observações |
-| --- | --- | --- | --- | --- |
-| [@usuario](https://github.com/usuario) | Rust | [Código](https://github.com/usuario/desafios/tree/main/001-wc) | Concluída | Leitura em fluxo |
+### Formato do catálogo
+
+Exemplo completo com **dados inteiramente fictícios** (não copie como contribuição real):
+
+```yaml
+implementations:
+  - author: "Pessoa Exemplo"
+    authorUrl: "https://example.org/pessoa-ficticia"
+    language: "Rust"
+    url: "https://example.org/repositorio-ficticio/wc/src/main.rs"
+    status: "partial"
+    notes: "Exemplo fictício: leitura em fluxo; contagem de palavras em desenvolvimento."
 ```
 
-- **Autor:** nome ou identificação pública preferida; o link para o perfil é opcional.
-- **Linguagem:** linguagem utilizada na implementação.
-- **Solução:** link direto para o repositório ou diretório daquela implementação.
-- **Estado:** `Concluída` ou `Parcial`, declarado pelo participante. Soluções parciais são bem-vindas.
-- **Observações:** descrição curta e opcional da abordagem, limitações ou instruções relevantes.
+Campos obrigatórios:
 
-Adicione apenas a linha à tabela existente, em ordem alfabética por autor.
-Se for a primeira contribuição do desafio, substitua a mensagem de que ainda
-não há implementações pela tabela preenchida. Use uma linha por implementação;
-para atualizar a mesma solução, edite a linha existente.
+- `author`: string com o nome ou identificador público escolhido; não precisa ser username do GitHub.
+- `language`: string com a linguagem utilizada, inclusive linguagens sem referência oficial.
+- `url`: URL HTTPS pública apontando diretamente para a implementação, preferencialmente seu diretório ou arquivo de código.
+- `status`: `completed` (declarada concluída) ou `partial` (parcial ou em desenvolvimento).
 
-A inclusão do link não indica certificação de correção, segurança ou conclusão
-pelo clube. Cada implementação externa mantém sua autoria e licença próprias;
-adicionar um link não aplica MIT ao código externo.
+Campos opcionais:
+
+- `authorUrl`: URL HTTPS do perfil ou página pessoal; sem ela, o autor aparece sem link.
+- `notes`: texto breve sobre abordagem, limitações ou decisões técnicas; não use HTML.
+
+Os catálogos usam YAML 1.2. Nomes e observações aceitam Unicode. Use apenas os campos documentados e URLs
+HTTPS válidas, sem credenciais. Não inclua as referências oficiais neste arquivo.
+O contrato de tipos está em [community.schema.json](community.schema.json).
+
+Mantenha a lista em ordem crescente por `author`, usando `language` como segundo
+critério: comparação exata dos pontos de código Unicode, sensível a maiúsculas e
+acentos, sem depender da configuração regional. Use a mesma grafia para seu nome.
+Múltiplas implementações do mesmo autor são aceitas; cada URL deve ser única
+dentro do desafio. Para atualizar uma contribuição, edite sua entrada existente
+em vez de criar uma duplicata. Sem contribuições, use `implementations: []`.
+
+Execute os comandos de validação do [README](README.md#validar-o-catálogo-da-comunidade)
+antes de enviar o PR. Não mantenha uma segunda lista no README do desafio.
+
+### Revisão e licenciamento
+
+O clube poderá verificar a pertinência, a existência de código correspondente
+e a conformidade com o formato. O estado é declarado pelo participante.
+A inclusão não garante correção, segurança, desempenho ou conclusão.
+
+Implementações externas pertencem aos respectivos autores e mantêm suas próprias
+licenças. A inclusão de um link não altera o licenciamento desse código.
+Código incorporado às implementações oficiais permanece sujeito à licença
+[MIT](LICENSE) aplicável a este repositório.
 
 ## Corrigir uma referência do clube
 
@@ -52,8 +88,8 @@ que ainda não existem.
 Cada desafio tem um `<id>/README.md` com link para sua definição oficial,
 uma seção **Referências do clube** e uma seção **Soluções da comunidade**.
 As referências do clube apontam para os READMEs das linguagens disponíveis;
-a comunidade usa a tabela acima. Enquanto não houver contribuições, use
-`Nenhuma implementação de participante foi indexada ainda.` nessa seção.
+a comunidade é indexada exclusivamente em `<id>/community.yaml`. O README
+aponta para esse catálogo e para este guia, sem duplicar suas entradas.
 
 Cada implementação mantida pelo clube fica em `<id>/<linguagem>/`, com README e Makefile próprios.
 Use nomes de linguagem em minúsculas, como `c` ou `rust`. O Makefile deve

@@ -10,7 +10,8 @@ Os identificadores são os mesmos usados no repositório de desafios e no site.
 
 ```text
 NNN-name/
-  README.md        # Definição, referências do clube e soluções da comunidade
+  README.md        # Definição, referências do clube e orientações
+  community.yaml   # Índice de implementações externas
   linguagem/       # Implementação mantida pelo Oxide Club
     README.md      # Como compilar, testar e estudar a solução
     Makefile       # Comandos próprios desta implementação
@@ -31,8 +32,7 @@ O código dos participantes permanece em seus próprios repositórios.
 
 Escolha um desafio, desenvolva sua implementação e compartilhe dúvidas e
 resultados no tópico do Discord indicado na definição. Soluções parciais
-são bem-vindas. Adicione sua implementação à seção **Soluções da comunidade**
-do README do desafio por PR, seguindo o modelo de [CONTRIBUTING.md](CONTRIBUTING.md).
+são bem-vindas. Adicione sua implementação ao `community.yaml` do desafio por PR, seguindo [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Recomendamos tentar o desafio antes de consultar a referência, mas você pode
 usá-la quando achar apropriado.
@@ -59,10 +59,27 @@ compilar as referências e atualizar essa revisão.
 
 ## Como contribuir
 
-Envie links de implementações para o README do desafio correspondente, ou proponha
+Envie links de implementações para o `community.yaml` do desafio correspondente, ou proponha
 correções e melhorias nas referências por pull request. Se encontrar uma
 lacuna nos testes, proponha a mudança em `challenges`, onde eles são mantidos.
 
 Veja [CONTRIBUTING.md](CONTRIBUTING.md). Código original incorporado neste
 repositório usa [MIT](LICENSE); implementações externas mantêm suas próprias
 licenças.
+
+## Validar o catálogo da comunidade
+
+O contrato está em [community.schema.json](community.schema.json). A chave
+`implementations` contém referências externas; uma lista vazia é válida.
+O ID vem do diretório, sem campo adicional. Consulte os campos e a ordenação
+em [CONTRIBUTING.md](CONTRIBUTING.md#formato-do-catálogo).
+
+```sh
+python3 -m pip install -r requirements-validation.txt
+python3 tools/validate_community.py
+python3 -m unittest discover -s tests -v
+```
+
+A validação é local e não acessa os projetos vinculados. O website lê estes
+catálogos durante sua build estática. O [guia de manutenção](docs/MAINTENANCE.md)
+descreve a sincronização e a configuração de publicação.

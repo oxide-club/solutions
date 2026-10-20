@@ -9,6 +9,5 @@
 
 ## Soluções da comunidade
 
-Nenhuma implementação de participante foi indexada ainda.
-
-Para compartilhar sua solução, siga o [modelo de contribuição](../CONTRIBUTING.md#compartilhar-uma-solução).
+Consulte as implementações externas em [community.yaml](community.yaml).
+Para compartilhar a sua, siga o [guia de contribuição](../CONTRIBUTING.md#compartilhar-uma-implementação).

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Oxide Club community implementations",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "implementations"
+  ],
+  "properties": {
+    "implementations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "author",
+          "language",
+          "url",
+          "status"
+        ],
+        "properties": {
+          "author": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "authorUrl": {
+            "type": "string",
+            "pattern": "^https://[^/?#\\s]+"
+          },
+          "language": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https://[^/?#\\s]+"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "completed",
+              "partial"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
