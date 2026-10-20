@@ -1,7 +1,7 @@
 # Soluções do Oxide Club
 
-Implementações comentadas mantidas pelo clube e um índice de soluções
-publicadas pelos participantes. As definições e os testes públicos ficam em
+Implementações comentadas mantidas pelo clube e índices de soluções
+publicadas pelos participantes, organizados por desafio. As definições e os testes públicos ficam em
 [challenges](https://github.com/oxide-club/challenges).
 
 ## Estrutura
@@ -9,8 +9,8 @@ publicadas pelos participantes. As definições e os testes públicos ficam em
 Os identificadores são os mesmos usados no repositório de desafios e no site.
 
 ```text
-COMMUNITY.md       # Links para implementações dos participantes
 NNN-name/
+  README.md        # Definição, referências do clube e soluções da comunidade
   linguagem/       # Implementação mantida pelo Oxide Club
     README.md      # Como compilar, testar e estudar a solução
     Makefile       # Comandos próprios desta implementação
@@ -21,18 +21,18 @@ O código dos participantes permanece em seus próprios repositórios.
 
 ## Índice de desafios
 
-| ID        | Definição                                                                                  | Referência do clube            |
+| ID        | Definição                                                                                  | Soluções do clube e da comunidade |
 | --------- | ------------------------------------------------------------------------------------------ | ------------------------------ |
-| `001-wc`  | [Construa seu wc](https://github.com/oxide-club/challenges/blob/main/001-wc/index.md)      | [Estudar](001-wc/c/README.md)  |
-| `002-ppm` | [Gere uma imagem PPM](https://github.com/oxide-club/challenges/blob/main/002-ppm/index.md) | [Estudar](002-ppm/c/README.md) |
-| `003-rle` | [Construa um compressor RLE](https://github.com/oxide-club/challenges/blob/main/003-rle/index.md) | [C](003-rle/c/README.md) · [Rust](003-rle/rust/README.md) |
+| `001-wc`  | [Construa seu wc](https://github.com/oxide-club/challenges/blob/main/001-wc/index.md)      | [Ver soluções](001-wc/README.md) |
+| `002-ppm` | [Gere uma imagem PPM](https://github.com/oxide-club/challenges/blob/main/002-ppm/index.md) | [Ver soluções](002-ppm/README.md) |
+| `003-rle` | [Construa um compressor RLE](https://github.com/oxide-club/challenges/blob/main/003-rle/index.md) | [Ver soluções](003-rle/README.md) |
 
 ## Como participar
 
 Escolha um desafio, desenvolva sua implementação e compartilhe dúvidas e
 resultados no tópico do Discord indicado na definição. Soluções parciais
-são bem-vindas. Adicione seu repositório ao [COMMUNITY.md](COMMUNITY.md) por PR,
-informando o desafio, sua atribuição e a linguagem utilizada.
+são bem-vindas. Adicione sua implementação à seção **Soluções da comunidade**
+do README do desafio por PR, seguindo o modelo de [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Recomendamos tentar o desafio antes de consultar a referência, mas você pode
 usá-la quando achar apropriado.
@@ -59,7 +59,7 @@ compilar as referências e atualizar essa revisão.
 
 ## Como contribuir
 
-Envie links de implementações para [COMMUNITY.md](COMMUNITY.md), ou proponha
+Envie links de implementações para o README do desafio correspondente, ou proponha
 correções e melhorias nas referências por pull request. Se encontrar uma
 lacuna nos testes, proponha a mudança em `challenges`, onde eles são mantidos.
 
