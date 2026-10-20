@@ -1,94 +1,67 @@
 # Soluções do Oxide Club
 
-Implementações comentadas mantidas pelo clube e um
-[índice de implementações da comunidade](COMMUNITY.md).
-As definições e os testes públicos ficam no repositório separado `challenges`.
+Implementações comentadas mantidas pelo clube e um índice de soluções
+publicadas pelos participantes. As definições e os testes públicos ficam em
+[challenges](https://github.com/oxide-club/challenges).
 
-> Uma possível solução comentada está disponível para estudo. Recomendamos tentar o desafio antes de consultá-la, mas você pode usá-la quando achar apropriado.
+## Estrutura
 
-| ID estável | Referência do clube |
-| --- | --- |
-| `001-wc` | [Contagem de linhas, palavras e bytes em C11](001-wc/reference/README.md) |
-| `002-ppm` | [Geração incremental de PPM P6 em C11](002-ppm/reference/README.md) |
-
-Uma referência é uma abordagem possível, não a única solução correta.
-Comentários e guias explicam decisões, complexidade e limites.
-
-## Compilar e testar
-
-Requisitos: compilador C11, Make, Python 3.10 ou superior e Git, em Unix/Linux.
-Não há dependências Python externas.
-
-Mantenha os dois checkouts lado a lado:
+Os identificadores são os mesmos usados no repositório de desafios e no site.
 
 ```text
-oxide-club/
-  challenges/
-  solutions/
+COMMUNITY.md       # Links para implementações dos participantes
+NNN-name/
+  linguagem/       # Implementação mantida pelo Oxide Club
+    README.md      # Como compilar, testar e estudar a solução
+    Makefile       # Comandos próprios desta implementação
 ```
 
-Na raiz de `solutions`:
+Cada referência apresenta uma abordagem possível, com suas decisões e limites.
+O código dos participantes permanece em seus próprios repositórios.
+
+## Índice de desafios
+
+| ID        | Definição                                                                                  | Referência do clube            |
+| --------- | ------------------------------------------------------------------------------------------ | ------------------------------ |
+| `001-wc`  | [Construa seu wc](https://github.com/oxide-club/challenges/blob/main/001-wc/index.md)      | [Estudar](001-wc/c/README.md)  |
+| `002-ppm` | [Gere uma imagem PPM](https://github.com/oxide-club/challenges/blob/main/002-ppm/index.md) | [Estudar](002-ppm/c/README.md) |
+
+## Como participar
+
+Escolha um desafio, desenvolva sua implementação e compartilhe dúvidas e
+resultados no tópico do Discord indicado na definição. Soluções parciais
+são bem-vindas. Adicione seu repositório ao [COMMUNITY.md](COMMUNITY.md) por PR,
+informando o desafio, sua atribuição e a linguagem utilizada.
+
+Recomendamos tentar o desafio antes de consultar a referência, mas você pode
+usá-la quando achar apropriado.
+
+## Como testar um programa
+
+Os testes públicos são os mesmos para participantes e referências do clube.
+Com um checkout de `challenges`, substitua `ID_DO_DESAFIO` pelo identificador:
 
 ```sh
-make
-make check
+python3 ../challenges/ID_DO_DESAFIO/tests/test.py /caminho/para/seu-programa
 ```
 
-`make` compila as referências em `build/001-wc` e `build/002-ppm`, com avisos
-habilitados e tratados como erros. `make check` confirma que `../challenges`
-está na revisão fixada, sem alterações, testa o validador da revisão e executa
-os mesmos testes públicos disponíveis aos participantes.
-
-Para outro local de checkout:
+Consulte o README de cada referência para compilação e execução. Para verificar
+uma implementação mantida pelo clube, substitua também `LINGUAGEM`:
 
 ```sh
-make check CHALLENGES_DIR=/caminho/para/challenges
+make -C ID_DO_DESAFIO/LINGUAGEM check
 ```
 
-Cada teste público aceita o caminho do executável. As asserções não são copiadas
-para este repositório. Veja os guias de cada referência para comandos individuais.
-Use `make clean` para remover os dois executáveis gerados.
+Esse comando requer um checkout de `challenges` na revisão adotada pelo CI.
+O [guia de manutenção](docs/MAINTENANCE.md) explica como preparar os checkouts,
+compilar as referências e atualizar essa revisão.
 
-## Revisão dos testes e CI
+## Como contribuir
 
-[challenges.lock.json](challenges.lock.json) registra o repositório público
-pretendido e o SHA completo dos testes adotados. CI valida esse arquivo,
-obtém exatamente a revisão indicada e executa `make check`. Pushes e pull
-requests rodam as verificações; nenhuma publicação é feita pelo workflow.
+Envie links de implementações para [COMMUNITY.md](COMMUNITY.md), ou proponha
+correções e melhorias nas referências por pull request. Se encontrar uma
+lacuna nos testes, proponha a mudança em `challenges`, onde eles são mantidos.
 
-Na configuração inicial, o destino é `oxide-club/challenges`. O CI remoto
-só poderá obter essa revisão depois de o repositório e o commit fixado
-serem publicados. Os testes locais funcionam com os checkouts existentes.
-
-Para conferir qual revisão preparar:
-
-```sh
-python3 tools/check_lock.py
-git -C ../challenges rev-parse HEAD
-```
-
-Use um checkout limpo na revisão indicada no manifesto. Se seu checkout contém
-trabalho em andamento, use outro clone e passe seu caminho em `CHALLENGES_DIR`.
-Não descarte alterações para satisfazer o verificador.
-
-Para adotar uma atualização dos testes:
-
-1. Revise e obtenha o novo commit de `challenges` em um checkout limpo.
-2. Atualize `revision` no manifesto com o SHA completo desse commit.
-3. Execute `make check` e inclua a atualização do manifesto no PR.
-4. Publique o commit de `challenges` antes do PR de `solutions` depender dele em CI.
-
-Durante o desenvolvimento de mudanças conjuntas, `make test` executa os
-testes do checkout indicado sem verificar o manifesto. Esse comando serve
-para experimentar mudanças ainda não fixadas; o CI sempre usa `make check`.
-
-## Participação e licença
-
-Veja [CONTRIBUTING.md](CONTRIBUTING.md) para corrigir referências ou adicionar
-seu repositório ao índice. IDs seguem `NNN-name` e correspondem ao mesmo diretório
-e slug em `challenges`.
-
-Código e documentação técnica original deste repositório usam [MIT](LICENSE).
-Implementações externas listadas em `COMMUNITY.md` mantêm seus próprios autores
-e licenças. As definições editoriais têm seu escopo documentado em `challenges`;
-elas não recebem uma nova licença por serem referenciadas aqui.
+Veja [CONTRIBUTING.md](CONTRIBUTING.md). Código original incorporado neste
+repositório usa [MIT](LICENSE); implementações externas mantêm suas próprias
+licenças.

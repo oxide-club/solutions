@@ -6,13 +6,13 @@ tentar o desafio antes de consultá-la, mas você pode usá-la quando achar apro
 O código está em [main.c](main.c). A definição e os testes públicos ficam
 no diretório `001-wc/` do repositório separado `challenges`.
 
-Na raiz de `solutions`:
+Neste diretório (`solutions/001-wc/c`):
 
 ```sh
-make build/001-wc
-printf 'Hello world\nC is fun\n' | ./build/001-wc
+make
+printf 'Hello world\nC is fun\n' | ./build/oxide-wc
 # 2 5 21
-python3 ../challenges/001-wc/tests/test.py ./build/001-wc
+make check
 ```
 
 ## Decisões

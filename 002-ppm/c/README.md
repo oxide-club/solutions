@@ -6,14 +6,14 @@ tentar o desafio antes de consultá-la, mas você pode usá-la quando achar apro
 O código está em [main.c](main.c). A definição e os testes públicos ficam
 no diretório `002-ppm/` do repositório separado `challenges`.
 
-Na raiz de `solutions`:
+Neste diretório (`solutions/002-ppm/c`):
 
 ```sh
-make build/002-ppm
-./build/002-ppm > build/imagem.ppm
+make
+./build/oxide-ppm > build/imagem.ppm
 wc -c < build/imagem.ppm
 # 196623
-python3 ../challenges/002-ppm/tests/test.py ./build/002-ppm
+make check
 ```
 
 ## Decisões

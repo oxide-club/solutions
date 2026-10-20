@@ -2,19 +2,19 @@
 
 Este índice reúne implementações publicadas pelos participantes em seus próprios
 repositórios. As referências mantidas pelo Oxide Club ficam separadas, nos
-diretórios `<id>/reference/`.
+diretórios `<id>/<linguagem>/`.
 
 ## 001-wc
 
 Nenhuma implementação de participante foi indexada ainda.
 
-Referência do clube: [001-wc/reference](001-wc/reference/README.md).
+Referência do clube: [001-wc/c](001-wc/c/README.md).
 
 ## 002-ppm
 
 Nenhuma implementação de participante foi indexada ainda.
 
-Referência do clube: [002-ppm/reference](002-ppm/reference/README.md).
+Referência do clube: [002-ppm/c](002-ppm/c/README.md).
 
 ## Adicionar sua implementação
 

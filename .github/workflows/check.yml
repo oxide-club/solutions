@@ -3,8 +3,12 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  check:
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      repository: ${{ steps.tests.outputs.repository }}
+      revision: ${{ steps.tests.outputs.revision }}
+      matrix: ${{ steps.solutions.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -12,17 +16,42 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
+      - name: Verificar ferramentas de manutenção
+        working-directory: solutions
+        run: python3 -m unittest discover -s tests -v
       - name: Validar revisão dos testes públicos
         id: tests
         working-directory: solutions
         run: python3 tools/check_lock.py --github-output "$GITHUB_OUTPUT"
+      - name: Descobrir implementações por linguagem
+        id: solutions
+        working-directory: solutions
+        run: |
+          matrix=$(python3 tools/list_solutions.py)
+          printf 'matrix=%s\n' "$matrix" >> "$GITHUB_OUTPUT"
+  check:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    steps:
       - uses: actions/checkout@v4
         with:
-          repository: ${{ steps.tests.outputs.repository }}
-          ref: ${{ steps.tests.outputs.revision }}
+          path: solutions
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ needs.prepare.outputs.repository }}
+          ref: ${{ needs.prepare.outputs.revision }}
           path: challenges
           persist-credentials: false
       - name: Compilar e executar os mesmos testes públicos
-        working-directory: solutions
+        working-directory: solutions/${{ matrix.challenge }}/${{ matrix.language }}
+        env:
+          CHALLENGES_DIR: ${{ github.workspace }}/challenges
         run: make check
