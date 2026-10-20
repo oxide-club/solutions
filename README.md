@@ -25,6 +25,7 @@ O código dos participantes permanece em seus próprios repositórios.
 | --------- | ------------------------------------------------------------------------------------------ | ------------------------------ |
 | `001-wc`  | [Construa seu wc](https://github.com/oxide-club/challenges/blob/main/001-wc/index.md)      | [Estudar](001-wc/c/README.md)  |
 | `002-ppm` | [Gere uma imagem PPM](https://github.com/oxide-club/challenges/blob/main/002-ppm/index.md) | [Estudar](002-ppm/c/README.md) |
+| `003-rle` | [Construa um compressor RLE](https://github.com/oxide-club/challenges/blob/main/003-rle/index.md) | [C](003-rle/c/README.md) · [Rust](003-rle/rust/README.md) |
 
 ## Como participar
 

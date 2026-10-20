@@ -50,6 +50,11 @@ jobs:
           ref: ${{ needs.prepare.outputs.revision }}
           path: challenges
           persist-credentials: false
+      - name: Preparar Rust estável
+        if: matrix.language == 'rust'
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup default stable
       - name: Compilar e executar os mesmos testes públicos
         working-directory: solutions/${{ matrix.challenge }}/${{ matrix.language }}
         env:

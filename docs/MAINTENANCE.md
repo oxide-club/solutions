@@ -16,8 +16,8 @@ make clean
 
 `make` compila o programa, `make check` verifica a revisão dos testes e executa
 a suíte pública, e `make clean` remove o executável gerado. As implementações
-atuais em C11 geram seus executáveis no `build/` local, com avisos tratados
-como erros.
+em C11 e Rust geram seus executáveis no `build/` local, com avisos tratados
+como erros. Rust usa `rustc` estável, sem dependências externas.
 
 ## Revisão dos testes
 

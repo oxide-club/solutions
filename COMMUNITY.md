@@ -16,6 +16,13 @@ Nenhuma implementação de participante foi indexada ainda.
 
 Referência do clube: [002-ppm/c](002-ppm/c/README.md).
 
+## 003-rle
+
+Nenhuma implementação de participante foi indexada ainda.
+
+Referências do clube: [003-rle/c](003-rle/c/README.md) e
+[003-rle/rust](003-rle/rust/README.md).
+
 ## Adicionar sua implementação
 
 Abra um pull request neste arquivo, na seção do ID correspondente. Inclua:
