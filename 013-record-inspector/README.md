@@ -1,12 +1,12 @@
-# 013-record-inspector — soluções
+# 013-record-inspector — Inspetor de um formato documentado
 
-A referência mantida pelo Oxide Club está em [C11](c/README.md).
-Leia o [enunciado e contrato](../../challenges/013-record-inspector/index.md) antes de consultá-la.
+[Definição oficial do desafio](https://github.com/oxide-club/challenges/blob/main/013-record-inspector/index.md).
 
-```sh
-make -C c
-make -C c test
-```
+## Referências do clube
 
-`make -C c check` também verifica a revisão fixada do repositório de desafios.
-Implementações da comunidade são registradas em [community.yaml](community.yaml).
+- [C](c/README.md)
+
+## Soluções da comunidade
+
+Consulte as implementações externas em [community.yaml](community.yaml).
+Para compartilhar a sua, siga o [guia de contribuição](../CONTRIBUTING.md#compartilhar-uma-implementação).

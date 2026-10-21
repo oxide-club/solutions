@@ -1,12 +1,12 @@
-# 021-bytecode — soluções
+# 021-bytecode — Uma VM de bytecode
 
-A referência mantida pelo Oxide Club está em [C11](c/README.md).
-Leia o [enunciado e contrato](../../challenges/021-bytecode/index.md) antes de consultá-la.
+[Definição oficial do desafio](https://github.com/oxide-club/challenges/blob/main/021-bytecode/index.md).
 
-```sh
-make -C c
-make -C c test
-```
+## Referências do clube
 
-`make -C c check` também verifica a revisão fixada do repositório de desafios.
-Implementações da comunidade são registradas em [community.yaml](community.yaml).
+- [C](c/README.md)
+
+## Soluções da comunidade
+
+Consulte as implementações externas em [community.yaml](community.yaml).
+Para compartilhar a sua, siga o [guia de contribuição](../CONTRIBUTING.md#compartilhar-uma-implementação).

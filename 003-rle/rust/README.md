@@ -23,6 +23,27 @@ O Makefile usa `rustc` diretamente, edição 2021, sem crates externos.
 Durante alterações conjuntas, `make test` usa os testes locais sem exigir
 a revisão fixada no manifesto. Consulte o [guia de manutenção](../../docs/MAINTENANCE.md).
 
+## Como funciona
+
+`run` valida o argumento, cria `BufReader` e `BufWriter` sobre `stdin` e
+`stdout` e chama `encode` ou `decode`. No fim, `flush` confirma a entrega
+do buffer. `main` converte o `Result` em código de saída.
+
+Em `encode`:
+
+1. `byte` lê um byte por vez e devolve `None` no fim da entrada.
+2. A função guarda o valor atual e a contagem de repetições em `u8`.
+3. Quando o byte muda, ou a contagem chega a 255, `write` grava a
+   contagem e o valor, e a contagem recomeça.
+4. No fim da entrada, o último par pendente é gravado.
+
+Em `decode`:
+
+1. A função lê a contagem. Zero é inválido.
+2. A função lê o valor. Fim da entrada nesse ponto é um par incompleto.
+3. `write` grava uma fatia de um array fixo de 255 bytes, com o tamanho
+   da contagem.
+
 ## Decisões
 
 `BufReader` e `BufWriter` mantêm buffers de tamanho constante. A leitura retorna

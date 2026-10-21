@@ -1,5 +1,12 @@
 # 011-dynamic-buffer — Array dinâmico
 
-Referência: [C11](c/README.md). [Enunciado](https://github.com/oxide-club/challenges/tree/main/011-dynamic-buffer).
+[Definição oficial do desafio](https://github.com/oxide-club/challenges/blob/main/011-dynamic-buffer/index.md).
 
-Soluções externas: [community.yaml](community.yaml).
+## Referências do clube
+
+- [C](c/README.md)
+
+## Soluções da comunidade
+
+Consulte as implementações externas em [community.yaml](community.yaml).
+Para compartilhar a sua, siga o [guia de contribuição](../CONTRIBUTING.md#compartilhar-uma-implementação).

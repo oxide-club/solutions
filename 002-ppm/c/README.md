@@ -16,6 +16,16 @@ wc -c < build/imagem.ppm
 make check
 ```
 
+## Como funciona
+
+1. `main` escreve o cabeçalho ASCII `P6\n256 256\n255\n` com `fputs`.
+2. O laço externo percorre as linhas (`y`). O interno percorre as colunas
+   (`x`).
+3. Para cada pixel, o programa monta três bytes: vermelho igual a `x`,
+   verde igual a `y` e azul igual a zero.
+4. `fwrite` grava os três bytes binários. Cada escrita é verificada.
+5. No fim, `fflush` confirma a entrega do buffer.
+
 ## Decisões
 
 O cabeçalho é texto ASCII. Os canais que vêm depois são bytes binários RGB;

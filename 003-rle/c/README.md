@@ -23,6 +23,25 @@ Durante alterações conjuntas dos repositórios, use `make test` para executar
 os testes locais sem exigir a revisão fixada no manifesto. Consulte o
 [guia de manutenção](../../docs/MAINTENANCE.md).
 
+## Como funciona
+
+`main` valida o argumento, ignora `SIGPIPE` e chama `encode` ou `decode`.
+No fim, `fflush` confirma a entrega do buffer.
+
+Em `encode`:
+
+1. O laço lê um byte por vez com `getchar`.
+2. O programa guarda o valor atual e a contagem de repetições.
+3. Quando o byte muda, ou a contagem chega a 255, `pair` escreve a
+   contagem e o valor, e a contagem recomeça.
+4. No `EOF`, o último par pendente é escrito.
+
+Em `decode`:
+
+1. O laço lê a contagem. Zero é inválido.
+2. O programa lê o valor. `EOF` nesse ponto é um par incompleto.
+3. `putchar` repete o valor pelo número de vezes da contagem.
+
 ## Decisões
 
 O encoder mantém um valor e uma contagem. Emite o par ao trocar de valor ou

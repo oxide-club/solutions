@@ -20,6 +20,26 @@ NNN-name/
 Cada referência apresenta uma abordagem possível, com suas decisões e limites.
 O código dos participantes permanece em seus próprios repositórios.
 
+## Padrão das referências
+
+Cada referência mantida pelo clube segue o mesmo roteiro, para que uma
+pessoa consiga estudar a implementação sem conhecer o repositório:
+
+- O `README.md` da linguagem traz os comandos de compilação e teste, um
+  exemplo de uso, a seção **Como funciona** com o fluxo passo a passo, a
+  seção **Decisões** com as escolhas de projeto e a seção **Limites** com
+  custos e escopo. Desafios de investigação trazem também o registro de
+  hipóteses e evidências.
+- O código tem cabeçalho de licença, indentação de quatro espaços, chaves
+  em todos os blocos e comentários curtos que explicam o porquê de cada
+  decisão. As mensagens de erro em `stderr` identificam o programa.
+- Textos e comentários usam frases curtas em português, no presente e na
+  voz ativa, no padrão ASD-STE100.
+- Nos desafios com API, `api.h` e `adapter.c` são cópias exatas dos
+  materiais do desafio e mantêm a formatação original. Só
+  `implementation.c` é da referência. `tools/verify_local.py` confere
+  que as cópias continuam idênticas.
+
 ## Índice de desafios
 
 | ID        | Definição                                                                                  | Soluções do clube e da comunidade |

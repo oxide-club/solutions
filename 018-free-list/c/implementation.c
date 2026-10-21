@@ -1,50 +1,107 @@
-/* Descritores cobrem a região em ordem; livres adjacentes são unidos após free.
+/* SPDX-License-Identifier: MIT
+ * Copyright (c) 2026 Oxide Club contributors
  */
 #include "api.h"
+
 #include <stdint.h>
-void pool_init(Pool *p, void *base, size_t capacity) {
-  p->base = base;
-  p->capacity = capacity - capacity % 8;
-  p->count = p->capacity ? 1 : 0;
-  if (p->count)
-    p->blocks[0] = (Block){0, p->capacity, 0};
+
+/* O mapa é o array Pool.blocks, com count descritores ordenados por
+ * offset. Invariantes depois de cada operação:
+ * - os blocos cobrem a capacidade útil sem lacunas nem sobreposição;
+ * - todo offset e todo tamanho são múltiplos de BLOCK_ALIGNMENT;
+ * - todo tamanho é positivo;
+ * - dois blocos livres nunca são vizinhos (coalescência).
+ * Os descritores ficam fora da região e não consomem capacidade. */
+
+/* Arredonda para cima ao múltiplo de BLOCK_ALIGNMENT. O chamador já
+ * conferiu que a soma não transborda. */
+static size_t round_up(size_t n)
+{
+    return (n + BLOCK_ALIGNMENT - 1) & ~(size_t)(BLOCK_ALIGNMENT - 1);
 }
-void *pool_alloc(Pool *p, size_t n) {
-  if (!n || n > SIZE_MAX - 7)
-    return NULL;
-  n = (n + 7) & ~(size_t)7;
-  for (size_t i = 0; i < p->count; i++) {
-    Block *b = &p->blocks[i];
-    if (b->used || b->size < n)
-      continue;
-    if (b->size > n) {
-      if (p->count == BLOCK_LIMIT)
-        return NULL;
-      for (size_t j = p->count; j > i + 1; j--)
-        p->blocks[j] = p->blocks[j - 1];
-      p->blocks[i + 1] = (Block){b->offset + n, b->size - n, 0};
-      p->count++;
-      b->size = n;
+
+void pool_init(Pool *pool, void *base, size_t capacity)
+{
+    pool->base = base;
+    /* A capacidade útil é um múltiplo do alinhamento. Os bytes restantes
+     * no fim da região nunca são entregues. */
+    pool->capacity = capacity - capacity % BLOCK_ALIGNMENT;
+    pool->count = pool->capacity != 0 ? 1 : 0;
+    if (pool->count != 0) {
+        pool->blocks[0] = (Block){0, pool->capacity, 0};
     }
-    b->used = 1;
-    return p->base + b->offset;
-  }
-  return NULL;
 }
-void pool_free(Pool *p, void *ptr) {
-  size_t off = (size_t)((unsigned char *)ptr - p->base), i = 0;
-  while (i < p->count && p->blocks[i].offset != off)
-    i++;
-  if (i == p->count)
-    return;
-  p->blocks[i].used = 0;
-  for (i = 0; i + 1 < p->count;) {
-    if (!p->blocks[i].used && !p->blocks[i + 1].used) {
-      p->blocks[i].size += p->blocks[i + 1].size;
-      for (size_t j = i + 1; j + 1 < p->count; j++)
-        p->blocks[j] = p->blocks[j + 1];
-      p->count--;
-    } else
-      i++;
-  }
+
+/* First-fit: percorre o mapa em ordem e escolhe o primeiro bloco livre com
+ * tamanho suficiente. Se sobra espaço, divide o bloco em dois: o primeiro
+ * fica usado e o segundo fica livre. Tamanho inválido, overflow, falta de
+ * espaço ou falta de descritor devolve NULL sem alterar o mapa. */
+void *pool_alloc(Pool *pool, size_t n)
+{
+    if (n == 0 || n > SIZE_MAX - (BLOCK_ALIGNMENT - 1)) {
+        return NULL;
+    }
+    n = round_up(n);
+
+    for (size_t i = 0; i < pool->count; ++i) {
+        Block *block = &pool->blocks[i];
+        if (block->used || block->size < n) {
+            continue;
+        }
+
+        if (block->size > n) {
+            /* A sobra é múltipla de 8, então tem no mínimo 8 bytes e vira
+             * um bloco livre novo logo depois deste. O novo descritor
+             * precisa de uma vaga no array. */
+            if (pool->count == BLOCK_LIMIT) {
+                return NULL;
+            }
+            /* Abre espaço na posição i + 1 deslocando os descritores
+             * seguintes uma posição para a direita. */
+            for (size_t j = pool->count; j > i + 1; --j) {
+                pool->blocks[j] = pool->blocks[j - 1];
+            }
+            pool->blocks[i + 1] =
+                (Block){block->offset + n, block->size - n, 0};
+            pool->count++;
+            block->size = n;
+        }
+
+        block->used = 1;
+        return pool->base + block->offset;
+    }
+    return NULL;
+}
+
+/* Marca o bloco como livre e une todos os blocos livres vizinhos.
+ * Só ponteiros vivos entregues por este pool são válidos aqui. */
+void pool_free(Pool *pool, void *pointer)
+{
+    const size_t offset = (size_t)((unsigned char *)pointer - pool->base);
+
+    size_t i = 0;
+    while (i < pool->count && pool->blocks[i].offset != offset) {
+        ++i;
+    }
+    if (i == pool->count) {
+        return;
+    }
+    pool->blocks[i].used = 0;
+
+    /* Coalescência: enquanto dois vizinhos estão livres, o primeiro absorve
+     * o segundo e os descritores seguintes deslocam uma posição para a
+     * esquerda. Um único percurso basta, porque o bloco recém-liberado é o
+     * único que pode ter criado vizinhos livres. */
+    i = 0;
+    while (i + 1 < pool->count) {
+        if (!pool->blocks[i].used && !pool->blocks[i + 1].used) {
+            pool->blocks[i].size += pool->blocks[i + 1].size;
+            for (size_t j = i + 1; j + 1 < pool->count; ++j) {
+                pool->blocks[j] = pool->blocks[j + 1];
+            }
+            pool->count--;
+        } else {
+            ++i;
+        }
+    }
 }
