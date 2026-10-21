@@ -39,6 +39,30 @@ o commit de `challenges` antes de o CI de `solutions` depender dele.
 Durante alterações conjuntas, `make test` executa a suíte do checkout indicado
 sem verificar o manifesto. O CI sempre usa `make check`.
 
+Para compilar e verificar todas as referências locais contra Python, os testes
+diretos de API e o runner Rust incorporado, execute na raiz de `solutions`:
+
+```sh
+python3 tools/verify_local.py
+python3 tools/verify_local.py --challenge 005-base64
+make -C 016-use-after-free/c sanitize
+python3 ../challenges/016-use-after-free/tests/sanitizer_regression.py \
+  016-use-after-free/c/implementation.c
+```
+
+O verificador compila `tools/oxide-test/Cargo.toml` no checkout vizinho de
+`challenges`; o binário fica em `tools/oxide-test/target/debug/oxide-test`. Aceita
+`--challenges-dir /caminho/challenges` e `--runner /caminho/oxide-test` para
+usar outros caminhos; o segundo precisa corresponder aos vetores atuais.
+Também confere que cópias dos headers/adaptadores fornecidos continuam iguais.
+O teste de sanitizador confirma que o starter reproduz uso após liberação e que
+a implementação corrigida passa nos mesmos casos, com ASan/UBSan habilitados.
+
+Os desafios `004`–`021` têm enunciados com `draft: false`. Para atualizar seus
+testes no CI, publique o commit correspondente em `challenges` e registre
+esse SHA real em `challenges.lock.json`. A verificação local não
+altera esse pin nem desabilita a exigência de checkout limpo de `make check`.
+
 ## Matriz de CI
 
 O workflow executa as verificações das ferramentas e descobre todos os
