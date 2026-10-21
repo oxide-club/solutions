@@ -15,6 +15,18 @@ printf 'Hello world\nC is fun\n' | ./build/oxide-wc
 make check
 ```
 
+## Como funciona
+
+1. `main` zera três contadores: linhas, palavras e bytes.
+2. O laço lê um byte por vez com `fgetc`, até `EOF`.
+3. Cada byte incrementa a contagem de bytes. Um `\n` incrementa a
+   contagem de linhas.
+4. `separator` classifica o byte. Um separador encerra a palavra atual.
+   Um não separador depois de um separador inicia uma palavra nova e
+   incrementa a contagem.
+5. No fim, `main` confere `ferror` na entrada, escreve os três números em
+   uma linha e confere `fflush`.
+
 ## Decisões
 
 `fgetc` permite processar a entrada incrementalmente. Seu resultado é
