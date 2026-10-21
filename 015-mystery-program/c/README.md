@@ -1,0 +1,7 @@
+# Referência C11: comportamento reconstruído
+
+`make`, `make test`, `make check` (com guarda da revisão), `make clean`.
+
+Um zero isolado resulta em 5a; três zeros resultam em 5c5b5a. Isso sugere alteração dependente da posição seguida de inversão. ABC distingue XOR de soma: os valores intermediários são 1b,19,1b; o resultado é 1b191b. Impulsos em posições diferentes distinguem a posição original da posição de saída.
+
+Pseudocódigo: para cada índice i original, out[n-1-i] = ((in[i] XOR 0x5a) + i) modulo 256. fresh e limit da suíte validam bytes altos e o limite sem reutilizar os traces iniciais. O programa usa array de 64 bytes, tempo O(n), memória limitada. O alvo distribuído é compilado desta fonte com `-O0 -g0` e sem símbolos locais, com GCC 16.2.1 20260810 e Binutils 2.47 em Linux x86-64. O script `rebuild-target.sh` registra essa toolchain, avisa se a toolchain local difere e falha se o ponto de entrada ou os limites de `main` deixarem de coincidir com os offsets citados em `traces.md`. A compilação e a conferência usam arquivos temporários. O script substitui o binário e a listagem distribuídos somente após essas etapas passarem; falhas de compilação ou offsets incompatíveis preservam os materiais anteriores. Com a mesma toolchain, o binário reconstruído é idêntico byte a byte ao distribuído. O clube distribui apenas o alvo Linux x86-64: outros alvos exigiriam listagens, traces e procedimentos de debugger próprios. Não se trata de ofuscação: o assembly da função main contém o laço diretamente.
