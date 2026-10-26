@@ -1,0 +1,12 @@
+{"seq":1,"state":"NEW","cause":"new","pid":0}
+{"seq":2,"state":"STARTING","cause":"sync","pid":1434013,"raw_status":4991,"signal":19,"event":0,"siginfo":{"code":-6,"signo":19}}
+{"seq":3,"state":"STOPPED","cause":"exec","pid":1434013,"raw_status":263551,"signal":5,"event":4,"siginfo":{"code":1029,"signo":5}}
+{"seq":4,"state":"STOPPED","cause":"exec_boundary","pid":1434013,"raw_status":34175,"signal":133,"event":0,"siginfo":{"code":133,"signo":5}}
+{"seq":5,"state":"STOPPED","cause":"step","pid":1434013,"raw_status":1407,"signal":5,"event":0,"siginfo":{"code":2,"signo":5}}
+{"seq":6,"state":"STOPPED","cause":"regs","pid":1434013,"regs":{"RIP":"0x401005","RSP":"0x7ffe2ee6e900","RAX":"0x5","RBX":"0x0","RCX":"0x0","RDX":"0x0","RFLAGS":"0x202"}}
+{"seq":7,"state":"STOPPED","cause":"step","pid":1434013,"raw_status":1407,"signal":5,"event":0,"siginfo":{"code":2,"signo":5}}
+{"seq":8,"state":"STOPPED","cause":"regs","pid":1434013,"regs":{"RIP":"0x401008","RSP":"0x7ffe2ee6e900","RAX":"0x8","RBX":"0x0","RCX":"0x0","RDX":"0x0","RFLAGS":"0x202"}}
+{"seq":9,"state":"STOPPED","cause":"step","pid":1434013,"raw_status":1407,"signal":5,"event":0,"siginfo":{"code":2,"signo":5}}
+{"seq":10,"state":"STOPPED","cause":"regs","pid":1434013,"regs":{"RIP":"0x40100b","RSP":"0x7ffe2ee6e900","RAX":"0x8","RBX":"0x8","RCX":"0x0","RDX":"0x0","RFLAGS":"0x202"}}
+{"seq":11,"state":"EXITED","cause":"exit","pid":1434013,"exit_code":7}
+{"seq":12,"state":"EXITED","cause":"eof","pid":1434013}

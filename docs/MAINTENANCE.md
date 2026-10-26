@@ -14,10 +14,13 @@ make check
 make clean
 ```
 
-`make` compila o programa, `make check` verifica a revisão dos testes e executa
-a suíte pública, e `make clean` remove o executável gerado. As implementações
-em C11 e Rust geram seus executáveis no `build/` local, com avisos tratados
-como erros. Rust usa `rustc` estável, sem dependências externas.
+`make` compila os artefatos, `make check` verifica a revisão dos testes e executa
+a suíte pública, e `make clean` remove os artefatos gerados. As implementações
+em C11 e Rust mantêm os artefatos no `build/` local. As bibliotecas Rust
+`022`–`024` usam Cargo, sem crates externas; `025` produz bibliotecas para
+ABI C com `rustc` e um helper C. Consulte os respectivos READMEs para flags
+e verificações de Miri/LSan. Os exercícios `028` e `031` produzem múltiplos
+artefatos; não possuem uma CLI única para o runner de programas.
 
 ## Revisão dos testes
 
@@ -54,9 +57,18 @@ O verificador compila `tools/oxide-test/Cargo.toml` no checkout vizinho de
 `challenges`; o binário fica em `tools/oxide-test/target/debug/oxide-test`. Aceita
 `--challenges-dir /caminho/challenges` e `--runner /caminho/oxide-test` para
 usar outros caminhos; o segundo precisa corresponder aos vetores atuais.
+O catálogo do runner determina quais programas passam também por ele; as
+demais referências executam suas suítes oficiais por `make test`.
 Também confere que cópias dos headers/adaptadores fornecidos continuam iguais.
 O teste de sanitizador confirma que o starter reproduz uso após liberação e que
 a implementação corrigida passa nos mesmos casos, com ASan/UBSan habilitados.
+
+A revisão atual inclui os desafios `022`–`031`. As referências excluem
+`026` e `030`, que permanecem em draft. Os testes de bibliotecas, ABI,
+interposição, debugger e IPC são executados pelos Makefiles próprios.
+As suítes de debugger e IPC precisam de um ambiente Linux que permita
+`ptrace`, sockets Unix e memória compartilhada; status 77 informa teste
+não executado, sem substituir aprovação funcional.
 
 Os desafios `004`–`021` têm enunciados com `draft: false`. Para atualizar seus
 testes no CI, publique o commit correspondente em `challenges` e registre

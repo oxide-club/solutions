@@ -40,8 +40,13 @@ def main():
         else:
             run(["cargo", "build", "--manifest-path", "tools/oxide-test/Cargo.toml", "--locked"], challenges)
             runner = challenges / "tools/oxide-test/target/debug/oxide-test"
+        # Bibliotecas, shared objects e sessões têm suítes próprias no Makefile.
+        # O catálogo do runner determina quais referências também aceitam sua CLI.
+        catalog = json.loads(run([str(runner), "list", "--json"], ROOT))
+        runner_ids = {entry["id"] for entry in catalog["challenges"]}
         print("Verificação local: usa os arquivos atuais; não altera challenges.lock.json.", flush=True)
         total = 0
+        runner_count = 0
         for entry in entries:
             identifier, language = entry["challenge"], entry["language"]
             directory = ROOT / identifier / language
@@ -53,14 +58,18 @@ def main():
                     if local.read_bytes() != original.read_bytes():
                         raise ValueError(f"material divergente: {local} e {original}")
             run(["make", "test", f"CHALLENGES_DIR={challenges}"], directory)
+            if identifier not in runner_ids:
+                print(f"OK {identifier}/{language}: suíte própria do desafio", flush=True)
+                continue
             executable = directory / "build" / f"oxide-{identifier.split('-', 1)[1]}"
             report = json.loads(run([str(runner), "run", identifier, str(executable), "--json"], ROOT))
             if report.get("all_public_tests_passed") is not True:
                 raise RuntimeError(f"suíte incompleta: {identifier}/{language}")
             count = report["summary"]["passed"]
             total += count
+            runner_count += 1
             print(f"OK {identifier}/{language}: Python + API (quando aplicável), Rust {count} casos", flush=True)
-        print(f"{len(entries)} referências verificadas; {total} casos no runner Rust.")
+        print(f"{len(entries)} referências verificadas; {runner_count} também no runner Rust ({total} casos).")
         return 0
     except (OSError, ValueError, RuntimeError) as error:
         print(error, file=sys.stderr)
