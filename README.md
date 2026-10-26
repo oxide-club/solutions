@@ -65,9 +65,19 @@ pessoa consiga estudar a implementação sem conhecer o repositório:
 | `019-rpn` | [Calculadora RPN](https://github.com/oxide-club/challenges/blob/main/019-rpn/index.md) | [Ver soluções](019-rpn/README.md) |
 | `020-expressions` | [Interpretador de expressões](https://github.com/oxide-club/challenges/blob/main/020-expressions/index.md) | [Ver soluções](020-expressions/README.md) |
 | `021-bytecode` | [Uma VM de bytecode](https://github.com/oxide-club/challenges/blob/main/021-bytecode/index.md) | [Ver soluções](021-bytecode/README.md) |
+| `022-typestate` | [Estados de recurso com typestate](https://github.com/oxide-club/challenges/blob/main/022-typestate/index.md) | [Ver soluções](022-typestate/README.md) |
+| `023-mini-vec` | [Vetor dinâmico com memória bruta](https://github.com/oxide-club/challenges/blob/main/023-mini-vec/index.md) | [Ver soluções](023-mini-vec/README.md) |
+| `024-mini-refcell` | [Borrows dinâmicos com guards](https://github.com/oxide-club/challenges/blob/main/024-mini-refcell/index.md) | [Ver soluções](024-mini-refcell/README.md) |
+| `025-rust-c-ffi` | [Fronteira Rust/C com contexto opaco](https://github.com/oxide-club/challenges/blob/main/025-rust-c-ffi/index.md) | [Ver soluções](025-rust-c-ffi/README.md) |
+| `027-pe-inspector` | [Inspetor de executáveis PE](https://github.com/oxide-club/challenges/blob/main/027-pe-inspector/index.md) | [Ver soluções](027-pe-inspector/README.md) |
+| `028-function-interposition` | [Tracing por interposição de funções](https://github.com/oxide-club/challenges/blob/main/028-function-interposition/index.md) | [Ver soluções](028-function-interposition/README.md) |
+| `029-minimal-debugger` | [Debugger mínimo de um processo](https://github.com/oxide-club/challenges/blob/main/029-minimal-debugger/index.md) | [Ver soluções](029-minimal-debugger/README.md) |
+| `031-ipc-snapshots` | [IPC e snapshots consistentes entre processos](https://github.com/oxide-club/challenges/blob/main/031-ipc-snapshots/index.md) | [Ver soluções](031-ipc-snapshots/README.md) |
 
 Os desafios `004`–`021` cobrem novembro de 2026 a abril de 2027.
 Seus enunciados estão disponíveis (`draft: false`), com três níveis por mês.
+Os desafios `022`–`031` também têm referências, exceto `026` e `030`,
+que permanecem em draft.
 O campo `participation: flagship` identifica o principal de cada livestream;
 `featured` destaca somente os exercícios trabalhados no mês atual.
 
@@ -102,7 +112,8 @@ compilar as referências e atualizar essa revisão.
 
 Para trabalhar nos dois repositórios antes de publicar uma nova revisão de
 testes, execute `python3 tools/verify_local.py`. Ele compila e confere todas as
-referências com os testes Python e com o runner Rust do checkout local,
+referências com as suítes próprias de cada desafio. Os programas presentes
+no catálogo do runner Rust também passam por ele no checkout local,
 preservando a proteção de revisão do CI.
 
 ## Como contribuir
